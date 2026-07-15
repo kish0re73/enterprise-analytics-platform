@@ -1,0 +1,37 @@
+{
+  "total_revenue": 119557976.89,
+  "total_orders": 10104,
+  "total_customers": 800,
+  "total_products": 90,
+  "aov": 11832.74,
+  "gross_profit": 31141152.8,
+  "margin_pct": 26.0,
+  "date_range": "2023-07-25 to 2026-06-30",
+  "fact_rows": 15261,
+  "rfm_segments": {
+    "Champions": 213,
+    "Potential Loyalists": 183,
+    "Loyal Customers": 182,
+    "At Risk": 160,
+    "Lost / Inactive": 62
+  },
+  "rfm_revenue_by_segment": {
+    "At Risk": 7784137.16,
+    "Champions": 75866225.98,
+    "Lost / Inactive": 1572191.48,
+    "Loyal Customers": 19843801.5,
+    "Potential Loyalists": 14491620.77
+  },
+  "top_category": "Electronics",
+  "top_region": "South",
+  "forecast_next3": {
+    "2026-07": 7059519.22,
+    "2026-08": 7199575.09,
+    "2026-09": 7314325.06
+  },
+  "forecast_r2": 0.883,
+  "churn_auc": 0.811,
+  "high_churn_risk_count": 137,
+  "anomaly_days": 31,
+  "anomaly_total_days": 1015
+}

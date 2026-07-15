@@ -1,0 +1,79 @@
+import graphviz
+
+# ---------------------------------------------------------------
+# STAR SCHEMA DIAGRAM
+# ---------------------------------------------------------------
+star = graphviz.Digraph("star_schema", format="png")
+star.attr(rankdir="TB", bgcolor="white", fontname="Helvetica")
+star.attr("node", shape="none", fontname="Helvetica")
+
+def table_html(title, rows, is_fact=False):
+    color = "#2E7D5B" if is_fact else "#3B6FA0"
+    html = f'<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6">'
+    html += f'<TR><TD BGCOLOR="{color}"><FONT COLOR="white"><B>{title}</B></FONT></TD></TR>'
+    for r in rows:
+        html += f'<TR><TD ALIGN="LEFT">{r}</TD></TR>'
+    html += '</TABLE>>'
+    return html
+
+star.node("fact_sales", table_html("FACT_SALES", [
+    "sales_key (PK)", "order_id", "item_id", "date_key (FK)", "customer_key (FK)",
+    "product_key (FK)", "region_key (FK)", "channel_key (FK)", "quantity",
+    "unit_price", "discount_pct", "revenue", "cost", "profit", "order_status",
+], is_fact=True))
+
+star.node("dim_date", table_html("DIM_DATE", [
+    "date_key (PK)", "full_date", "day", "month", "month_name",
+    "quarter", "year", "day_of_week", "day_name", "is_weekend", "fiscal_quarter",
+]))
+star.node("dim_customer", table_html("DIM_CUSTOMER", [
+    "customer_key (PK)", "customer_id", "customer_name", "email",
+    "city", "region_id", "signup_date", "valid_from", "valid_to", "is_current",
+]))
+star.node("dim_product", table_html("DIM_PRODUCT", [
+    "product_key (PK)", "product_id", "product_name", "category",
+    "cost_price", "sell_price", "current_stock", "reorder_level",
+]))
+star.node("dim_region", table_html("DIM_REGION", [
+    "region_key (PK)", "region_id", "region_name", "country",
+]))
+star.node("dim_channel", table_html("DIM_CHANNEL", [
+    "channel_key (PK)", "channel_name",
+]))
+
+for dim in ["dim_date", "dim_customer", "dim_product", "dim_region", "dim_channel"]:
+    star.edge(dim, "fact_sales", arrowhead="none", color="#888888")
+
+star.render("/home/claude/task04/docs/star_schema_diagram", cleanup=True)
+
+# ---------------------------------------------------------------
+# ETL WORKFLOW DIAGRAM
+# ---------------------------------------------------------------
+etl = graphviz.Digraph("etl_workflow", format="png")
+etl.attr(rankdir="LR", bgcolor="white", fontname="Helvetica", nodesep="0.6", ranksep="0.9")
+etl.attr("node", fontname="Helvetica", style="filled", fontcolor="white")
+
+etl.node("sources", "Source Systems\n(Orders DB, CRM,\nProduct Catalog)", shape="folder", fillcolor="#555555")
+etl.node("extract", "EXTRACT\nextract.py", shape="box", fillcolor="#3B6FA0")
+etl.node("raw", "Raw Landing Zone\ndata/raw/*.csv", shape="cylinder", fillcolor="#888888")
+etl.node("transform", "TRANSFORM\ntransform.py\n(clean, dedupe,\nbuild dims + fact)", shape="box", fillcolor="#2E7D5B")
+etl.node("processed", "Processed Layer\ndata/processed/*.csv", shape="cylinder", fillcolor="#888888")
+etl.node("load", "LOAD\nload.py\n(surrogate key\nmapping)", shape="box", fillcolor="#B0504B")
+etl.node("warehouse", "PostgreSQL\nStar Schema\nWarehouse", shape="cylinder", fillcolor="#2E3B4E")
+etl.node("consume", "Consumption Layer\nSQL Analytics · Python ML\nStreamlit Dashboard", shape="box3d", fillcolor="#6A4C93")
+etl.node("airflow", "Apache Airflow\nDAG orchestrates\nExtract → Transform → Load\ndaily schedule", shape="note", fillcolor="#D9A441")
+
+etl.edge("sources", "extract")
+etl.edge("extract", "raw")
+etl.edge("raw", "transform")
+etl.edge("transform", "processed")
+etl.edge("processed", "load")
+etl.edge("load", "warehouse")
+etl.edge("warehouse", "consume")
+etl.edge("airflow", "extract", style="dashed", label="orchestrates")
+etl.edge("airflow", "transform", style="dashed")
+etl.edge("airflow", "load", style="dashed")
+
+etl.render("/home/claude/task04/docs/etl_workflow_diagram", cleanup=True)
+
+print("Diagrams generated.")
