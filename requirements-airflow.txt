@@ -1,0 +1,92 @@
+"""
+etl/airflow_dag.py
+-------------------------------------------------------------------
+Apache Airflow DAG that orchestrates the Extract -> Transform -> Load
+pipeline on a daily schedule. This defines the production
+orchestration; it's included as source code documenting how the
+pipeline would run on a schedule rather than executed inside this
+sandbox (Airflow's scheduler/webserver is a persistent service, out
+of scope to stand up for a one-off deliverable, but the DAG itself
+is real, valid Airflow code).
+
+To run for real: `pip install apache-airflow`, place this file in
+your Airflow DAGs folder, and set the BI_DB_URL connection in
+Airflow's Connections UI (or as an Airflow Variable) instead of the
+hardcoded default in etl/load.py.
+-------------------------------------------------------------------
+"""
+from datetime import datetime, timedelta
+from airflow import DAG
+from airflow.operators.python import PythonOperator
+from airflow.operators.email import EmailOperator
+
+import sys
+import os
+
+sys.path.insert(0, os.path.dirname(__file__))
+
+default_args = {
+    "owner": "bi-analytics-team",
+    "retries": 2,
+    "retry_delay": timedelta(minutes=5),
+    "email_on_failure": True,
+    "email": ["bi-alerts@example.com"],
+}
+
+with DAG(
+    dag_id="enterprise_bi_etl_pipeline",
+    description="Daily Extract -> Transform -> Load pipeline for the BI warehouse",
+    default_args=default_args,
+    schedule_interval="0 2 * * *",   # 2 AM daily
+    start_date=datetime(2026, 1, 1),
+    catchup=False,
+    tags=["bi", "etl", "warehouse"],
+) as dag:
+
+    def run_extract(**context):
+        from extract import __name__ as _  # extract.py runs its logic at import time in this simplified version
+        import importlib
+        import extract  # noqa: F401
+        importlib.reload(extract)
+
+    def run_transform(**context):
+        from transform import transform
+        transform()
+
+    def run_load(**context):
+        from load import load
+        load()
+
+    def data_quality_check(**context):
+        """Basic post-load sanity checks -- fails the DAG run if the
+        warehouse looks obviously wrong, rather than silently continuing."""
+        from sqlalchemy import create_engine, text
+        db_url = os.environ.get("BI_DB_URL", "postgresql://postgres:postgres@localhost:5432/bi_warehouse")
+        engine = create_engine(db_url)
+        with engine.connect() as conn:
+            fact_count = conn.execute(text("SELECT COUNT(*) FROM fact_sales")).scalar()
+            null_revenue = conn.execute(text("SELECT COUNT(*) FROM fact_sales WHERE revenue IS NULL")).scalar()
+            orphan_customers = conn.execute(text("""
+                SELECT COUNT(*) FROM fact_sales f
+                LEFT JOIN dim_customer c ON f.customer_key = c.customer_key
+                WHERE c.customer_key IS NULL
+            """)).scalar()
+
+        assert fact_count > 0, "fact_sales is empty after load"
+        assert null_revenue == 0, f"{null_revenue} rows have NULL revenue"
+        assert orphan_customers == 0, f"{orphan_customers} fact rows have no matching dim_customer"
+        print(f"[DQ CHECK] Passed. fact_sales rows: {fact_count}")
+
+    extract_task = PythonOperator(task_id="extract", python_callable=run_extract)
+    transform_task = PythonOperator(task_id="transform", python_callable=run_transform)
+    load_task = PythonOperator(task_id="load", python_callable=run_load)
+    dq_check_task = PythonOperator(task_id="data_quality_check", python_callable=data_quality_check)
+
+    notify_success = EmailOperator(
+        task_id="notify_success",
+        to="bi-team@example.com",
+        subject="BI Warehouse Refresh Succeeded — {{ ds }}",
+        html_content="Daily ETL pipeline completed and passed data quality checks.",
+    )
+
+    extract_task >> transform_task >> load_task >> dq_check_task >> notify_success
