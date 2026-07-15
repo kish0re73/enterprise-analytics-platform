@@ -1,0 +1,91 @@
+product_id,product_name,category,cost_price,sell_price,current_stock,reorder_level
+1,Electronics Purpose 1,Electronics,12161.38,16547.71,106,90
+2,Electronics Brother 2,Electronics,17402.58,22157.13,214,53
+3,Electronics Ago 3,Electronics,19572.85,23743.12,343,59
+4,Electronics Site 4,Electronics,10434.18,12852.86,276,62
+5,Electronics Face 5,Electronics,11656.14,14991.35,235,78
+6,Electronics Election 6,Electronics,15957.58,20199.11,475,89
+7,Electronics Dog 7,Electronics,12834.47,16362.3,174,91
+8,Electronics Chair 8,Electronics,9751.06,12524.21,319,32
+9,Electronics Since 9,Electronics,24029.47,31536.01,328,68
+10,Electronics Blue 10,Electronics,3467.42,4712.58,13,38
+11,Electronics Require 11,Electronics,4015.17,4975.98,91,89
+12,Electronics Sit 12,Electronics,7982.52,10227.67,430,64
+13,Electronics Wait 13,Electronics,27473.96,34166.41,359,33
+14,Electronics Offer 14,Electronics,11788.81,15152.85,105,33
+15,Electronics Begin 15,Electronics,8888.96,12126.14,217,73
+16,Electronics Performance 16,Electronics,26770.37,36150.9,269,77
+17,Electronics Knowledge 17,Electronics,11962.37,15476.14,251,91
+18,Electronics Almost 18,Electronics,12222.69,15449.62,337,82
+19,Home All 19,Home & Kitchen,2639.94,4374.56,187,70
+20,Home Better 20,Home & Kitchen,2025.77,2963.93,344,38
+21,Home Discover 21,Home & Kitchen,3785.7,5566.15,471,92
+22,Home Early 22,Home & Kitchen,3718.66,5909.06,162,64
+23,Home Mouth 23,Home & Kitchen,3850.01,5558.81,230,70
+24,Home Play 24,Home & Kitchen,4244.54,6901.74,267,63
+25,Home Agreement 25,Home & Kitchen,1229.7,1854.98,61,66
+26,Home Option 26,Home & Kitchen,3345.69,5258.5,474,64
+27,Home Decide 27,Home & Kitchen,2595.78,3772.72,461,32
+28,Home Sense 28,Home & Kitchen,3528.95,5480.82,254,43
+29,Home Rate 29,Home & Kitchen,2513.63,3880.7,14,71
+30,Home Science 30,Home & Kitchen,2455.78,3612.36,351,81
+31,Home Offer 31,Home & Kitchen,2676.25,4244.99,484,52
+32,Home Kind 32,Home & Kitchen,2890.6,4474.51,28,65
+33,Home Discussion 33,Home & Kitchen,4659.99,7279.95,242,57
+34,Home List 34,Home & Kitchen,4391.4,7092.2,440,35
+35,Fashion Perform 35,Fashion,1541.17,2453.48,339,59
+36,Fashion Fall 36,Fashion,2690.38,4356.43,347,91
+37,Fashion Table 37,Fashion,812.1,1294.79,445,32
+38,Fashion True 38,Fashion,307.01,512.6,136,91
+39,Fashion According 39,Fashion,1106.48,1734.26,171,53
+40,Fashion Song 40,Fashion,2996.07,4850.53,95,81
+41,Fashion Sure 41,Fashion,1195.36,2162.29,51,41
+42,Fashion Collection 42,Fashion,1098.69,1830.31,112,85
+43,Fashion Save 43,Fashion,503.56,854.87,129,83
+44,Fashion Knowledge 44,Fashion,506.28,822.56,384,48
+45,Fashion Grow 45,Fashion,1958.81,3281.6,217,61
+46,Fashion Fall 46,Fashion,1644.13,2783.21,438,85
+47,Fashion Clearly 47,Fashion,1030.42,1785.27,279,98
+48,Fashion Dinner 48,Fashion,1808.54,3082.84,394,45
+49,Fashion Source 49,Fashion,2501.13,4047.64,325,32
+50,Fashion Great 50,Fashion,1701.86,2922.94,402,96
+51,Fashion Blue 51,Fashion,2399.19,3900.27,198,81
+52,Fashion Best 52,Fashion,2945.49,4826.75,38,30
+53,Fashion Husband 53,Fashion,1879.52,3260.34,433,52
+54,Fashion Bill 54,Fashion,1591.69,2742.3,262,45
+55,Beauty Her 55,Beauty,903.52,1659.42,59,31
+56,Beauty Throw 56,Beauty,1198.06,2379.66,452,66
+57,Beauty Guy 57,Beauty,1061.39,1826.43,232,48
+58,Beauty Pm 58,Beauty,750.5,1470.73,151,83
+59,Beauty Everything 59,Beauty,845.24,1577.53,74,65
+60,Beauty Surface 60,Beauty,1010.63,1873.77,226,54
+61,Beauty Animal 61,Beauty,141.06,241.57,337,95
+62,Beauty Show 62,Beauty,753.35,1408.64,168,62
+63,Beauty Machine 63,Beauty,177.87,323.05,303,49
+64,Beauty Not 64,Beauty,491.45,935.05,194,46
+65,Beauty Capital 65,Beauty,471.8,864.5,442,51
+66,Beauty Win 66,Beauty,395.02,785.79,364,80
+67,Beauty Human 67,Beauty,995.39,1854.0,225,50
+68,Beauty Bar 68,Beauty,603.8,1113.39,447,98
+69,Sports Old 69,Sports,1401.41,2060.65,3,64
+70,Sports Finally 70,Sports,3122.57,4303.2,171,59
+71,Sports Themselves 71,Sports,3701.33,5796.79,98,66
+72,Sports Production 72,Sports,3778.94,5499.18,180,89
+73,Sports Present 73,Sports,3398.28,4850.84,468,61
+74,Sports Value 74,Sports,3377.85,4837.19,127,47
+75,Sports Training 75,Sports,2079.81,3268.16,57,96
+76,Sports High 76,Sports,2394.51,3324.41,287,76
+77,Sports Participant 77,Sports,4611.67,6440.95,154,31
+78,Sports Dark 78,Sports,1539.39,2386.16,392,72
+79,Sports Sea 79,Sports,2682.42,3975.62,169,55
+80,Sports Available 80,Sports,2931.68,4557.3,12,89
+81,Books Answer 81,Books,498.78,692.89,172,49
+82,Books Recently 82,Books,571.67,816.9,399,43
+83,Books Drive 83,Books,822.39,1117.07,91,95
+84,Books Spring 84,Books,446.14,634.81,50,54
+85,Books Figure 85,Books,280.56,417.62,149,87
+86,Books Base 86,Books,796.1,1068.62,169,99
+87,Books Top 87,Books,384.12,536.26,100,37
+88,Books Early 88,Books,708.21,946.27,4,97
+89,Books Trial 89,Books,781.4,1041.09,349,76
+90,Books Blood 90,Books,655.66,867.09,143,42
